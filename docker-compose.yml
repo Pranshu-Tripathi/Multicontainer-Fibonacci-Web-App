@@ -2,12 +2,15 @@ services:
   postgres:
     image: 'postgres:latest'
     environment:
-      - POSTGRES_PASSWORD='postgres_password'
+      - POSTGRES_PASSWORD=postgres_password
   
   redis:
     image: 'redis:latest'
   
-  server:
+  api:
+    depends_on:
+      - postgres
+      - redis
     build:
       context: ./server
       dockerfile: Dockerfile.dev
@@ -30,8 +33,12 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+    environment:
+      - WDS_SOCKET_PORT=0
   
   worker:
+    depends_on:
+      - redis
     build:
       context: ./worker
       dockerfile: Dockerfile.dev
@@ -41,3 +48,14 @@ services:
     environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+  
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - '3050:80'
