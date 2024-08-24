@@ -21,3 +21,7 @@ after_success:
   - docker push pranshu72001/fib-app-nginx
   - docker push pranshu72001/fib-app-server
   - docker push pranshu72001/fib-app-worker
+
+branches:
+  only:
+    - main
