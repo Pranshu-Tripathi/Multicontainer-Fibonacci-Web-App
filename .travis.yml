@@ -25,3 +25,15 @@ after_success:
 branches:
   only:
     - main
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us_east-1"
+  app: "Fibonacci-Cacl"
+  env: "Fibonacci-Cacl-env"
+  bucket_name: "elasticbeanstalk-us-east-1-933377854955"
+  bucket_path: "Fibonacci-Cacl"
+  on:
+    branch: main
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
