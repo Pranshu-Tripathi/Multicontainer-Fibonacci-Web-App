@@ -37,3 +37,5 @@ deploy:
     branch: main
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key: $AWS_SECRET_KEY
+
+# http://fibonacci-cacl-env.eba-2mvvvews.us-east-1.elasticbeanstalk.com/
